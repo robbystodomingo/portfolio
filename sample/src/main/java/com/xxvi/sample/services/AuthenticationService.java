@@ -8,7 +8,7 @@ import com.xxvi.sample.entities.User;
 
 public interface AuthenticationService {
 
-    User signup(SignUpRequest signUpRequest);
+    JWTAuthenticationResponse signup(SignUpRequest signUpRequest);
 
     JWTAuthenticationResponse signin(SignInRequest signInRequest);
 

@@ -1,14 +1,14 @@
 package com.xxvi.sample.services.impl;
 
-import com.xxvi.sample.dto.JWTAuthenticationResponse;
-import com.xxvi.sample.dto.RefreshTokenRequest;
-import com.xxvi.sample.dto.SignInRequest;
-import com.xxvi.sample.dto.SignUpRequest;
+import com.xxvi.sample.dto.*;
 import com.xxvi.sample.entities.Role;
 import com.xxvi.sample.entities.User;
 import com.xxvi.sample.repository.UserRepository;
 import com.xxvi.sample.services.AuthenticationService;
 import com.xxvi.sample.services.JWTService;
+import com.xxvi.sample.token.Token;
+import com.xxvi.sample.token.TokenRepository;
+import com.xxvi.sample.token.TokenType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,18 +29,26 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final JWTService jwtService;
 
-
-    public User signup(SignUpRequest signUpRequest){
-        User user = new User();
-
-        user.setEmail(signUpRequest.getEmail());
-        user.setFirstName(signUpRequest.getFirstName());
-        user.setLastName(signUpRequest.getLastName());
-        user.setRole(Role.USER);
-        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+    private final TokenRepository tokenRepository;
 
 
-        return userRepository.save(user);
+    public JWTAuthenticationResponse signup(SignUpRequest signUpRequest){
+        var user = User.builder()
+                .firstName(signUpRequest.getFirstName())
+                .lastName(signUpRequest.getLastName())
+                .email(signUpRequest.getEmail())
+                .role(Role.USER)
+                .password(passwordEncoder.encode(signUpRequest.getPassword()))
+                .build();
+
+        var savedUser = userRepository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(new HashMap<>(),user);
+        saveUserToken(savedUser,jwtToken);
+        return JWTAuthenticationResponse.builder()
+                .token(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     public JWTAuthenticationResponse signin(SignInRequest signInRequest){
@@ -50,12 +58,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var user = userRepository.findByEmail(signInRequest.getEmail()).orElseThrow(() -> new IllegalArgumentException("Invalid email or password"));
         var jwt = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwt);
 
-        JWTAuthenticationResponse jwtAuthenticationResponse = new JWTAuthenticationResponse();
-
-        jwtAuthenticationResponse.setToken(jwt);
-        jwtAuthenticationResponse.setRefreshToken(refreshToken);
-        return jwtAuthenticationResponse;
+        return JWTAuthenticationResponse.builder()
+                .token(jwt)
+                .refreshToken(refreshToken)
+                .build();
     }
 
     public JWTAuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
@@ -74,6 +83,28 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         return null;
+    }
+
+    private void saveUserToken(User user, String jwtToken) {
+        var token = Token.builder()
+                .user(user)
+                .token(jwtToken)
+                .tokenType(TokenType.BEARER)
+                .expired(false)
+                .revoked(false)
+                .build();
+        tokenRepository.save(token);
+    }
+
+    private void revokeAllUserTokens(User user) {
+        var validUserTokens = tokenRepository.findAllValidTokensByUser(user.getId());
+        if (validUserTokens.isEmpty())
+            return;
+        validUserTokens.forEach(token -> {
+            token.setExpired(true);
+            token.setRevoked(true);
+        });
+        tokenRepository.saveAll(validUserTokens);
     }
 
 }

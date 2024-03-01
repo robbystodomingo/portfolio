@@ -24,18 +24,17 @@ public class SampleApplication implements CommandLineRunner {
 	public void run(String... args){
 		User adminAccount = userRepository.findByRole(Role.ADMIN);
 		if(null == adminAccount){
-			User user = new User();
 
-
-			user.setEmail("admin@gmail.com");
-			user.setFirstName("admin");
-			user.setLastName("admin");
-			user.setRole(Role.ADMIN);
-			user.setPassword(new BCryptPasswordEncoder().encode("admin"));
-			userRepository.save(user);
+			var user = User.builder()
+					.email("admin@gmail.com")
+					.firstName("admin")
+					.lastName("admin")
+					.role(Role.ADMIN)
+					.password(new BCryptPasswordEncoder().encode("admin"))
+					.build();
+			 userRepository.save(user);
 		}
 	}
-
 
 }
 
