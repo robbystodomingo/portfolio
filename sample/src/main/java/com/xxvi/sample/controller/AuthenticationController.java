@@ -6,18 +6,23 @@ import com.xxvi.sample.dto.SignInRequest;
 import com.xxvi.sample.dto.SignUpRequest;
 import com.xxvi.sample.entities.User;
 import com.xxvi.sample.services.AuthenticationService;
+import com.xxvi.sample.services.JWTService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.converter.RsaKeyConverters;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-@CrossOrigin
+@CrossOrigin()
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+
+    private final JWTService jwtService;
+
+
 
     @PostMapping("/signup")
     public ResponseEntity<JWTAuthenticationResponse> signup(@RequestBody SignUpRequest signUpRequest){

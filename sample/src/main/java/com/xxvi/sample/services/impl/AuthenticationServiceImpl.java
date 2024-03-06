@@ -10,6 +10,8 @@ import com.xxvi.sample.token.Token;
 import com.xxvi.sample.token.TokenRepository;
 import com.xxvi.sample.token.TokenType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -60,7 +62,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         var refreshToken = jwtService.generateRefreshToken(new HashMap<>(), user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwt);
-
+        ResponseEntity.ok().header(
+                HttpHeaders.AUTHORIZATION,
+                jwtService.generateToken(user)
+                )
+                .body(user);
         return JWTAuthenticationResponse.builder()
                 .token(jwt)
                 .refreshToken(refreshToken)
