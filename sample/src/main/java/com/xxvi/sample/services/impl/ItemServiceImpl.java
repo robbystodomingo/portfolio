@@ -9,6 +9,9 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Component
@@ -38,7 +41,7 @@ public class ItemServiceImpl implements ItemService {
 
 
     @Override
-    public String updateItem(ItemRequest itemRequest, String id) {
+    public String updateItem(ItemRequest itemRequest, Integer id) {
         if(id.equals(itemRequest.getId())){
             var item = Item.builder()
                     .itemNumber(itemRequest.getItemNumber())
@@ -56,6 +59,13 @@ public class ItemServiceImpl implements ItemService {
 
         return "";
 
+    }
+
+    @Override
+    public List<Item> getAllItems() {
+        List<Item> items = new ArrayList<Item>();
+        itemRepository.findAll().forEach(item -> items.add(item));
+        return items;
     }
 
 
