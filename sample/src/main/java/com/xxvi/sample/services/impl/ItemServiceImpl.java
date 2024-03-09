@@ -63,7 +63,7 @@ public class ItemServiceImpl implements ItemService {
 
     @Override
     public List<Item> getAllItems() {
-        List<Item> items = new ArrayList<Item>();
+        List<Item> items = new ArrayList<>();
         itemRepository.findAll().forEach(item -> items.add(item));
         return items;
     }
