@@ -3,7 +3,6 @@ package com.xxvi.sample.controller;
 import com.xxvi.sample.dto.ItemRequest;
 import com.xxvi.sample.services.ItemService;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.Response;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
