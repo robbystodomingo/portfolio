@@ -23,7 +23,7 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
 
 
-function Home() {
+function Navbar() {
 
   const navigate = useNavigate();
   const drawerWidth = 240;
@@ -111,4 +111,4 @@ function Home() {
     );
   }
 
-  export default Home;
+  export default Navbar;
