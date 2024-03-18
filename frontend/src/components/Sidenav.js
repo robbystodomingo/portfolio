@@ -1,12 +1,7 @@
 import React from 'react'
 import { SidebarData } from './SidebarData';
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import { Sidebar } from 'primereact/sidebar';
-import { Button } from 'primereact/button';
-import { Avatar } from 'primereact/avatar';
-
-import { useState } from 'react';
 
 import 'bootstrap/dist/css/bootstrap.min.css'
 

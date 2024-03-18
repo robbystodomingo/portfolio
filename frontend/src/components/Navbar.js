@@ -3,14 +3,6 @@ import React from 'react'
 import {Link, useNavigate } from 'react-router-dom';
 import axios from "axios";
 
-import { Sidebar } from 'primereact/sidebar';
-import { Button } from 'primereact/button';
-import { Avatar } from 'primereact/avatar';
-
-import { useState } from 'react';
-
-
-
 
 const Navbar = () => {
 
@@ -31,10 +23,6 @@ const Navbar = () => {
       alert(err);
     }
   }
-
-  
-
-
 
     return (
     <div className="appbar">
