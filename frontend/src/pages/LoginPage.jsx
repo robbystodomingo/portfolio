@@ -92,7 +92,7 @@ function LoginPage() {
             name="password"
             type="password"
             id="password"
-            placeholder="password"
+            placeholder="Enter Password"
 
             value={password}
             onChange={(event) => {

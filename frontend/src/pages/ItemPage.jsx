@@ -13,7 +13,7 @@ import TableRow from '@mui/material/TableRow';
 
 const columns = [
   { id: 'itemNumber', label: 'Item number', minWidth: 170 },
-  { id: 'description', label: 'Description', minWidth: 100 },
+  { id: 'description', label: 'Description', minWidth: 170 },
   {
     id: 'locationCode',
     label: 'Location Code',
@@ -73,86 +73,57 @@ export default function ItemPage() {
   };
 
   return (
-    // <div className="container">
-    //   <div className="py-4">
-    //     <table className="table border shadow">
-    //       <thead>
-    //         <tr>
-    //           <th scope="col">Item number</th>
-    //           <th scope="col">Description</th>
-    //           <th scope="col">Location Code</th>
-    //           <th scope="col">Quantity</th>
-    //           <th scope="col">Unit Amount</th>
-    //           <th scope="col">Amount</th>
-    //         </tr>
-    //       </thead>
-    //       <tbody>
-    //         {items.map((item, index) => (
-    //           <tr>
-    //             {/* <th scope="row" key={index}>
-    //               {index + 1}
-    //             </th> */}
-    //             <td>{item.itemNumber}</td>
-    //             <td>{item.description}</td>
-    //             <td>{item.locationCode}</td>
-    //             <td>{item.quantity}</td>
-    //             <td>{item.unitAmount}</td>
-    //             <td>{item.amount}</td>
-               
-    //           </tr>
-    //         ))}
-    //       </tbody>
-    //     </table>
-    //   </div>
-    // </div>
-<Paper sx={{ width: '100%', overflow: 'hidden' }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {items
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((item) => {
-                return (
-                  <TableRow hover role="checkbox" tabIndex={-1} key={item.code}>
-                    {columns.map((column) => {
-                      const value = item[column.id];
-                      return (
-                        <TableCell key={column.id} align={column.align}>
-                          {column.format && typeof value === 'number'
-                            ? column.format(value)
-                            : value}
-                        </TableCell>
-                      );
-                    })}
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={items.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-    </Paper>
+    <div className="content_index">
+    <Paper sx={{ width: '60%', overflow: 'hidden', justifyContent: 'right' }}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
+                    >
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {items
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((item) => {
+                    return (
+                      <TableRow hover role="checkbox" tabIndex={-1} key={item.code}>
+                        {columns.map((column) => {
+                          const value = item[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === 'number'
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={items.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+    </div>
+    
 
   );
 }

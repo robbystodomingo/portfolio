@@ -1,4 +1,5 @@
 import {  useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import React from 'react'
 
@@ -8,6 +9,7 @@ function SignupPage() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
 
     async function save(event) {
@@ -19,6 +21,7 @@ function SignupPage() {
           email: email,
           password: password,
           });
+          navigate('/');
           alert("User Registered Successfully");
 
         } catch (err) {
