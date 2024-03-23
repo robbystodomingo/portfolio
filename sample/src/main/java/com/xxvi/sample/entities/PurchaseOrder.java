@@ -1,6 +1,5 @@
 package com.xxvi.sample.entities;
 
-
 import jakarta.persistence.*;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
@@ -18,37 +17,34 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Transactional
-@Table(name = "item")
-public class Item {
+@Table(name = "purchase_orders")
+
+public class PurchaseOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private Integer itemNumber;
+    private String vendor;
 
-    private String description;
+    private String vendorAddress;
 
-    private String locationCode;
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "fk_item_id", referencedColumnName = "id")
+    private List<Item> items;
 
-    private BigDecimal quantity;
+    @OneToOne
+    private User approvedBy;
 
-    private BigDecimal unitAmount;
+    private Date dateRequested;
 
-    private BigDecimal amount;
+    private Date dateApproved;
 
-    private Date createdDate;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private BigDecimal invoiceNumber;
 
-    private String createdBy;
-
-    private String modifiedBy;
-
-    private boolean isBlocked() {
+    private boolean isReceived (){
         return false;
     }
-
-    @ManyToOne
-    @JoinColumn(name = "fk_po_id")
-    private PurchaseOrder purchaseOrder;
 
 }

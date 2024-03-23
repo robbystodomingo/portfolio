@@ -28,11 +28,10 @@ const Navbar = () => {
     <div className="appbar">
       <div className="appbar-menu">
         <Link to={"/home"}>Home</Link>
-        <Link to={"/items"}>Items</Link>
       </div>
 
       <div className='profile'>
-        <a onClick={logout}>Logout</a>
+        <Link onClick={logout}>Logout</Link>
 
       </div>
 

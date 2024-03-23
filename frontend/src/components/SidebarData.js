@@ -4,13 +4,28 @@ import React from 'react'
 
 export const SidebarData = [
     {
-        title: "Customers",
+        title: "Vendors",
         path: "/",
-        icon: <MuiIcon.Shop/>
+        icon: <MuiIcon.Groups2Rounded/>
     },
     {
         title: "Items",
         path: "/items",
-        icon: <MuiIcon.ImportExport/>
+        icon: <MuiIcon.StorefrontRounded/>
     },
+    {
+        title: "Purchase Order",
+        path: "/items",
+        icon: <MuiIcon.ShoppingCartRounded/>
+    },
+    {
+        title: "Sales",
+        path: "/items",
+        icon: <MuiIcon.PointOfSaleRounded/>
+    },
+    {
+        title: "Bin Locations",
+        path: "/items",
+        icon: <MuiIcon.LocationOnRounded/>
+    }
 ]
