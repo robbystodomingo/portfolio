@@ -15,7 +15,7 @@ export const SidebarData = [
     },
     {
         title: "Purchase Order",
-        path: "/items",
+        path: "/purchaseOrder",
         icon: <MuiIcon.ShoppingCartRounded/>
     },
     {

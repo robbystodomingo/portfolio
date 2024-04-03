@@ -13,5 +13,7 @@ public interface ItemService {
 
     List<Item> getAllItems();
 
+    //String getItemByDescriptionOrItemNumber(ItemRequest itemRequest);
+
 
 }

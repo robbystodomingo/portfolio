@@ -67,4 +67,10 @@ public class ItemServiceImpl implements ItemService {
     }
 
 
+    /*public String getItemByDescOrItemNo(ItemRequest itemRequest) {
+
+        return null;
+    }*/
+
+
 }

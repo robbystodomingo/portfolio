@@ -11,6 +11,7 @@ import Navbar from './components/Navbar';
 
 import { BrowserRouter,Routes,Route } from "react-router-dom";
 import Sidenav from './components/Sidenav';
+import PurchaseOrderPage from './pages/PurchaseOrderPage';
 
 
 function App() {
@@ -26,6 +27,7 @@ return (
         <Route path = "/" element = { <LoginPage/>} />
         <Route path = "/signup" element = { <SignupPage/>} />
         <Route path = "/items" element = { <ItemPage/>} />
+        <Route path = "/purchaseOrder" element = { <PurchaseOrderPage/>} />
       </Routes>
     </BrowserRouter>
   </div>
